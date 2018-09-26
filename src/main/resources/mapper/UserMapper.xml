@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxpmc.pc.manager.dao.userdao" >
+    <insert id="addUser" parameterType="hxpmc.pc.manager.pojo.User">
+        INSERT INTO
+        user (Id,username,password,role_Id,salt) VALUES (#{id},#{username},#{password},#{roleIdStr},#{salt});
+    </insert>
+    <select id="findById" parameterType="int" resultType="hxpmc.pc.manager.pojo.User">
+        SELECT
+        Id as id,username,password,role_Id as roleIdStr,salt FROM user where id=#{id};
+    </select>
+    <select id="findOne" parameterType="String" resultType="hxpmc.pc.manager.pojo.User">
+        SELECT
+        Id as id,username,password,role_Id as roleIdStr,salt FROM user where username=#{username};
+    </select>
+
+    <select id="findAll" resultType="hxpmc.pc.manager.pojo.User">
+        SELECT
+        Id as id,username,password,role_Id as roleIdStr,salt FROM user;
+    </select>
+    <delete id="delete" parameterType="integer">
+        delete from sys_user where id=#{id}
+    </delete>
+    <update id="update" parameterType="hxpmc.pc.manager.pojo.User">
+        update sys_user set
+        username=#{username},password=#{password},role_Id+#{roleIdStr} where Id=#{id}
+    </update>
+    <select id="selectDul" resultType="int" parameterType="String">
+        select COUNT(*) from user WHERE username=#{username};
+    </select>
+</mapper>
