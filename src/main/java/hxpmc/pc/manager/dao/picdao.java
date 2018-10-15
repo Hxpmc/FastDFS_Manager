@@ -8,6 +8,8 @@ import java.util.List;
 public interface picdao {
     public pic findOne(String id);
     public pic findByName(String name);
+    public pic findByPath(String path);
     public List<pic> findAll();
     public  int  add(pic pic);
+    public  int deletePic(String path);
 }

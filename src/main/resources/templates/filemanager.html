@@ -71,7 +71,7 @@
                     <td th:text="${p.type}"></td>
                     <td th:text="${p.path}"></td>
                     <td th:text="${p.createtime}"></td>
-                    <td> <a href="">下载</a>|<a th:href="@{/delete/(id=${p.path})}">删除</a></td>
+                    <td> <a th:href="@{/download/(id=${p.path})}">下载</a>|<a th:href="@{/delete/(id=${p.path})}">删除</a></td>
                 </tr>
                 </tbody>
             </table>

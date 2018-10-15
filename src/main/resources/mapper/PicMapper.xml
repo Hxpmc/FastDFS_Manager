@@ -7,5 +7,10 @@
     <select id="findAll" resultType="hxpmc.pc.manager.pojo.pic">
         SELECT * FROM  pic
     </select>
-    
+    <delete id="deletePic" parameterType="String">
+        DELETE  FROM  pic WHERE  path = #{path}
+    </delete>
+    <select id="findByPath" parameterType="String" resultType="hxpmc.pc.manager.pojo.pic">
+        SELECT * FROM  pic WHERE  path =#{path}
+    </select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -35,13 +36,14 @@ public class PicController {
         return "ok";
     }
     @RequestMapping("delete")
-    @ResponseBody
     public String delete(String id) throws IOException, MyException {
-        UploadUtils.deleteFile(id);
-        return "ok";
+      picService.deletePic(id);
+        return "redirect:filemanager";
     }
-@RequestMapping("dowmload")
-    public String download(String id){
-      return "ok";
+@RequestMapping("download")
+@ResponseBody
+    public String download(String id) throws FileNotFoundException {
+        picService.downloadPic(id);
+    return "ok";
 }
 }
