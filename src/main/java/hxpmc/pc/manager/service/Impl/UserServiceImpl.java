@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addUser(User user) {
         passwordHelper.encryptPassword(user);
-    int i = userdao.addUser(user);
+            int i = userdao.addUser(user);
       return i;
     }
 }

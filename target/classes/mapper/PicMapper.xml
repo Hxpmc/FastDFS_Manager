@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxpmc.pc.manager.dao.picdao" >
+    <insert id="add" parameterType="hxpmc.pc.manager.pojo.pic">
+        INSERT  INTO pic  (id,name,path,type,createtime)  VALUES (#{id},#{name},#{path},#{type},#{createtime})
+    </insert>
+    <select id="findAll" resultType="hxpmc.pc.manager.pojo.pic">
+        SELECT * FROM  pic
+    </select>
+    <delete id="deletePic" parameterType="String">
+        DELETE  FROM  pic WHERE  path = #{path}
+    </delete>
+    <select id="findByPath" parameterType="String" resultType="hxpmc.pc.manager.pojo.pic">
+        SELECT * FROM  pic WHERE  path =#{path}
+    </select>
+</mapper>
