@@ -47,7 +47,12 @@ public class pageController {
     @RequestMapping("login")
     public String login(){
         return "login";
-
+    }
+    @RequestMapping("loginout")
+    public String loginout(){
+        Subject subject= SecurityUtils.getSubject();
+        subject.logout();
+        return "login";
     }
     @RequestMapping("index")
     public  String index(){

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -292,7 +292,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/loginout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -354,6 +354,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+          <li><p shiro:hasRole="admin">你的角色为超级管理员</p></li>
             <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i>文件数据</a></li>
             <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> 文件上传</a></li>
           </ul>

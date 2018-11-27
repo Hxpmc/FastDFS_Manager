@@ -2,6 +2,7 @@ package hxpmc.pc.manager;
 
 import hxpmc.pc.manager.service.Impl.UserServiceImpl;
 import hxpmc.pc.manager.untils.UploadUtils;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.csource.common.MyException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,16 +17,12 @@ import java.io.IOException;
 public class ManagerApplicationTests {
 	@Autowired
 	UserServiceImpl userdao;
+	@Autowired
+	SessionDAO sessionDAO;
 	@Test
 	public void contextLoads() {
-		try {
-			String s = UploadUtils.uploadFile("C:\\Users\\Administrator\\Desktop\\403189072846067370.jpg");
-			System.out.println(s);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (MyException e) {
-			e.printStackTrace();
-		}
-	}
+		sessionDAO.getActiveSessions();
 
+
+	}
 }

@@ -36,7 +36,7 @@ public class PicController {
         return "ok";
     }
     @RequestMapping("delete")
-    public String delete(String id) throws IOException, MyException {
+    public String delete(String id) throws IOException {
       picService.deletePic(id);
         return "redirect:filemanager";
     }

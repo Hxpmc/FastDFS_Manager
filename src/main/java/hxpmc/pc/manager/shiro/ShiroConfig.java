@@ -1,10 +1,12 @@
 package hxpmc.pc.manager.shiro;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -33,8 +35,9 @@ public class ShiroConfig {
         Map<String,Filter> filterMap =shiroFilterFactoryBean.getFilters();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String,String> filterChainDefinitionMap =new LinkedHashMap<String,String>();
-        filterMap.put("authc",new FormAuthenticationFilter());
+        filterMap.put("authc",new CustomerFormAuthenticationFilter());
         filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/image/**", "anon");//img
         filterChainDefinitionMap.put("/css/**", "anon");//css
         filterChainDefinitionMap.put("/js/**", "anon");//js
@@ -75,6 +78,31 @@ public class ShiroConfig {
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRealm(myShiroRealm());
+//        securityManager.setSessionManager(sessionManager());
         return securityManager;
+    }
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
+    @Bean
+    public MemorySessionDAO sessionDAO(){
+        MemorySessionDAO  sessionDAO= new MemorySessionDAO();
+        return  sessionDAO;
+    }
+    @Bean
+    public SessionManager sessionManager(){
+        DefaultSessionManager sessionManager= new DefaultSessionManager();
+        sessionManager.setSessionDAO(sessionDAO());
+        sessionManager.setGlobalSessionTimeout(1800000);
+        sessionManager.setDeleteInvalidSessions(true);
+        //是否开启定时调度器进行检测过期session 默认为true
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        //设置session失效的扫描时间, 清理用户直接关闭浏览器造成的孤立会话 默认为 1个小时
+        //设置该属性 就不需要设置 ExecutorServiceSessionValidationScheduler 底层也是默认自动调用ExecutorServiceSessionValidationScheduler
+        //暂时设置为 5秒 用来测试
+        sessionManager.setSessionValidationInterval(5000);
+
+        return sessionManager;
     }
 }
